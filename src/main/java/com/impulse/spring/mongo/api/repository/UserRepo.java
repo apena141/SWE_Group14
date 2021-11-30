@@ -1,15 +1,11 @@
 package com.impulse.spring.mongo.api.repository;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.impulse.spring.mongo.api.model.Cart;
+import com.impulse.spring.mongo.api.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.impulse.spring.mongo.api.model.Book;
-import com.impulse.spring.mongo.api.model.User;
-
 public interface UserRepo extends MongoRepository <User,String> {
+	Cart findCartByUser(String user);
 
-	List<Book> findCartByUser(String user);
-	
+	User findByUser(String user);
 }

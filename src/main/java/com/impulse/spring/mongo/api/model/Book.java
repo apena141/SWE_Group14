@@ -18,6 +18,4 @@ public class Book {
     private String productName;
     private int amountSold;
     private double rating;
-
-	
 }
