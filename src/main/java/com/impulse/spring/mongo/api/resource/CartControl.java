@@ -2,7 +2,6 @@ package com.impulse.spring.mongo.api.resource;
 
 //Imports
 import java.util.List;
-import java.util.Optional;
 
 import com.impulse.spring.mongo.api.model.*;
 import com.impulse.spring.mongo.api.repository.*;
@@ -29,14 +28,14 @@ public class CartControl {
 	  this.cartRepo = cartRepo;
   }
 
-  @PostMapping("/makeCart/{user}")
+  @PostMapping("/makeCart/{userName}")
   public String makeCart(@RequestBody CartItem item, @PathVariable String userName) {
       CartItem cart = new CartItem (item.id, item.author,item.productName);
       cartRepo.save(cart);
       return "Cart for " + userName + " created";
   }
   
-  @GetMapping("/retrieveCart/{user}")
+  @GetMapping("/retrieveCart/{userName}")
   public List<CartItem> getUserCart (@PathVariable String userName){
       List <CartItem> cart = cartRepo.findByUserName(userName);
       return cart;
@@ -44,11 +43,11 @@ public class CartControl {
   
 
   @PostMapping("/addToCart/{userName}")
-  public String addBookToCart (@RequestBody CartItem item, @PathVariable String userName) {
+  public String addBookToCart (@RequestBody CartItem item, @PathVariable("userName") String userName) {
 	  List<CartItem> cart = cartRepo.findByUserName(userName);
 	  
 	  cart.add(item);
-      cartRepo.save(cart);
+      cartRepo.saveAll(cart);
       
       return "The book \"" + item.productName + "\" added to cart";
   }
@@ -58,7 +57,7 @@ public class CartControl {
 	  List<CartItem> cart = cartRepo.findByUserName(userName);
       
       cartRepo.delete(item);
-      cartRepo.save(cart);
+      cartRepo.saveAll(cart);
 
       return "The book \"" + item.productName + "\" was deleted from the cart";
   }
