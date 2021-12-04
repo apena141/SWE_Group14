@@ -29,9 +29,9 @@ public class CartControl {
   }
 
   @PostMapping("/makeCart/{userName}")
-  public String makeCart(@RequestBody CartItem item, @PathVariable String userName) {
-      CartItem cart = new CartItem (item.id, item.author,item.productName);
-      cartRepo.save(cart);
+  public String makeCart( @PathVariable String userName) {
+      List<CartItem> cart = cartRepo.findByUserName(userName);
+      cartRepo.saveAll(cart);
       return "Cart for " + userName + " created";
   }
   
@@ -54,11 +54,7 @@ public class CartControl {
 
   @DeleteMapping("/dltFromCart/{userName}")
   public String dltFromCart (@RequestBody CartItem item, @PathVariable("userName") String userName){
-	  List<CartItem> cart = cartRepo.findByUserName(userName);
-      
       cartRepo.delete(item);
-      cartRepo.saveAll(cart);
-
       return "The book \"" + item.productName + "\" was deleted from the cart";
   }
   

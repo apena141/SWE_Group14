@@ -16,7 +16,7 @@ import lombok.ToString;
 @ComponentScan
 
 // model begins
-@Document(collection = "cart")
+@Document(collection = "cart2")
 @Entity
 public class CartItem {
 	@Id
